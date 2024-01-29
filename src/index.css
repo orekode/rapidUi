@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+    background: #0e0e0e;
+    color: white;
+    font-family: 'Gowun Batang', serif;
+    font-family: 'Space Grotesk', sans-serif;
+    user-select: none;
+}
+
+.h {
+    /* font-family: 'Orbitron', sans-serif; */
+}
+
+@layer {
+    .flex-between {
+        @apply flex items-center justify-between;
+    }
+
+    .flex-center {
+        @apply flex items-center justify-center;
+    }
+
+    .img-cover {
+        @apply h-full w-full object-cover;
+    }
+
+    .spacing {
+        @apply px-24 max-[1110px]:px-12 max-[370px]:px-6;
+    }
+}
+
+img {
+    height: 100%;
+    width: 100%;
+}

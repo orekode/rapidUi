@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Menu, Moon, ShoppingBag, Sun, X } from "lucide-react";
 import { Button } from '../components';
-import { useMode } from '../store/general';
+import { useCart, useMode } from '../store/general';
 import { useEffect, useState } from 'react';
 
 
@@ -23,6 +23,7 @@ const Nav = () => {
     ];
 
     const { mode, toggle } = useMode(state => state);
+    const cart = useCart(state => state);
 
     const [showMenu, setShowMenu] = useState(false);
 
@@ -45,7 +46,7 @@ const Nav = () => {
                             <Link to={item.link} key={item.name} className="transition-all duration-300 dark:text-gray-300 px-1.5 py-0.5 rounded-3xl hover:shadow">{item.name}</Link>
                         )}
 
-                        <div className="mx-3">
+                        <div onClick={() => {cart.toggle(); console.log('clicked')}}  className="mx-3">
                             <ShoppingBag />
                         </div>
 
@@ -77,7 +78,7 @@ const Nav = () => {
                     <Link to={item.link} key={item.name} className="transition-all duration-300 dark:text-gray-300 px-9 py-3 hover:shadow border-y text-2xl">{item.name}</Link>
                 )}
 
-                <div className=" flex items-center gap-3 border-y py-3 px-9 text-2xl">
+                <div onClick={() => cart.toggle()} className=" flex items-center gap-3 border-y py-3 px-9 text-2xl">
                     Cart
                     <ShoppingBag />
                 </div>

@@ -17,8 +17,6 @@ const PageScroller = () => {
     return () => { window.removeEventListener('scroll', handleScroll) };
   }, []);
 
-  console.log(position, window.scroll);
-
 
   if(position > window.scrollHeight / 2)
   return (

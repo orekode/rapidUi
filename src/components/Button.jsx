@@ -1,9 +1,9 @@
 
 
 
-export const Md = ({ children }) => {
+export const Md = ({  baseColor="bg-blue-500", hoverColor="bg-red-500", width="w-max", children }) => {
   return (
-    <div className="group relative bg-blue-500  text-white px-6 py-3 rounded-3xl w-max  max-[965px]:mx-auto overflow-hidden active:scale-90 transition-all duration-150">
+    <div className={`group relative ${baseColor}  text-white px-6 py-3 rounded-3xl ${width}  max-[965px]:mx-auto overflow-hidden active:scale-90 transition-all duration-150`}>
         <button className="relative z-10 outline-none s">
             {children}
         </button>

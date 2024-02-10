@@ -9,7 +9,7 @@ const LeftRightBanner = ({ title }) => {
             <div className="col-span-7 flex items-center relative">
                 <div className="">
                     <h1 className="text-8xl max-[1050px]:text-6xl max-[400px]:text-5xl font-bold text-transparent blue-image-text scale-90">
-                        {title.map( (item, index) => 
+                        {title.split(" ").map( (item, index) => 
                             <span key={index} className="text-animate" style={{"--i": index}}>{item}</span>
                         )}
                     </h1>

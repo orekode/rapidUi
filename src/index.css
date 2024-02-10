@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 
+* {
+    scroll-behavior: smooth;
+}
+
+
 body {
     font-family: 'Gowun Batang', serif;
     font-family: 'Space Grotesk', sans-serif;

@@ -8,13 +8,11 @@ import { useCart } from "../store/general";
 const Cart = () => {
     const {cart, toggle } = useCart((state) => state)
     return (
-        <section className={`cart h-screen w-screen fixed ${ cart ? 'top-0' : 'top-[200vh]'} left-0 z-[50] pxy6-12 transition-all duration-300`}>
+        <section className={`cart h-screen w-screen fixed ${ cart ? 'top-0' : 'top-[200vh]'} left-0 z-[50] transition-all duration-300`}>
 
+            <div className="bg-white dark:bg-[#0e0e0e]  max-w-[1350px] mx-auto shadow rounded-3xl relative z-10 p-3 px-4 max-[480px]:px-0 scale-95">
 
-
-            <div className="bg-white dark:bg-[#0e0e0e]  max-w-[1200px] mx-auto shadow rounded-3xl relative z-10 p-3 px-4">
-
-                <div className="flex justify-between">
+                <div className="flex justify-between max-[480px]:p-3 max-[480px]:pt-0 max-[480px]:pb-0">
 
                     <div className="flex gap-2 relative z-10">
                         <div className="flex justify-between items-center  rounded-3xl gap-3">
@@ -46,7 +44,7 @@ const Cart = () => {
 
                 <div className="h-[80vh] overflow-y-scroll   scrollbar-thin">
                     <div className="">
-                        <div className="   max-[1000px]:w-full">
+                        <div className="grid grid-cols-2 max-[830px]:grid-cols-1 gap-x-6 max-[1000px]:w-full">
                             {Array.from({length: 10}, (_, index) => 
                                 <Card.CartItem />
                             )}
@@ -56,9 +54,8 @@ const Cart = () => {
                 
                 
 
-                <Button.Md width="w-full text-center mt-3 ">Proceed to checkout</Button.Md>
+                <Button.Md width="w-full text-center mt-3 max-[480px]:scale-90">Proceed to checkout</Button.Md>
             </div>
-
 
             {/* Background overlay */}
             <div className={`bg-black ${ cart ? ' backdrop-blur bg-opacity-20' : 'bg-opacity-0'} absolute h-full w-full top-0 left-0 z-0 transition-all duration-700 delay-300`}>

@@ -14,7 +14,7 @@ const Nav = () => {
         },
         {
             name: 'Shop',
-            link: '/'
+            link: '/shop'
         },
         {
             name: 'Lap Exchange',

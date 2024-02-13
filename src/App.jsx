@@ -3,7 +3,7 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 
 import { Root } from '@/layouts';
 import General from './layouts/General';
-import { Home } from './pages';
+import { Home, Shop } from './pages';
 
 function App() {
 
@@ -12,6 +12,7 @@ function App() {
       <Route path="/" element={<Root />}>
         <Route element={ <General />}>
           <Route index element={<Home />} />
+          <Route path="shop" element={<Shop />} />
         </Route>
       </Route>
     )

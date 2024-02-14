@@ -18,7 +18,7 @@ const Nav = () => {
         },
         {
             name: 'Lap Exchange',
-            link: '/'
+            link: '/exchange'
         },
     ];
 

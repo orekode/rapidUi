@@ -6,7 +6,7 @@ export const Product = ({ item }) => {
     return (
       <div className="relative group">
           <div className="w-full h-[300px] max-[550px]:h-[220px] max-[360px]:h-[170px] overflow-hidden relative border dark:border-[#262626] dark:bg-[#111] rounded-3xl">
-            <div className="h-full w-full p-12">
+            <div className="h-full w-full p-12 max-[600px]:p-6">
               <img src={item.image} className="object-contain"/>
             </div>
   

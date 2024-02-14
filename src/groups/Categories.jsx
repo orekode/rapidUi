@@ -20,3 +20,20 @@ export const Popular = () => {
     </Scroll.Side>
   )
 }
+
+export const PopularCircle = () => {
+  return (
+    <Scroll.Side>
+        {Array.from({length: 10}).map( (item, index) => 
+        <div key={index} className="text-center">
+            <div className="h-[100px] w-[100px] p-3 rounded-full overflow-hidden border dark:border-[#444]">
+                <img src="/images/laptop.png" className="object-contain" />
+            </div>
+            <div className="">
+                <span className="">Laptops</span>
+            </div>
+        </div>
+        )}
+    </Scroll.Side>
+  )
+}

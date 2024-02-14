@@ -6,6 +6,6 @@ export const useMode = create((set) => ({
 }));
 
 export const useCart = create((set) => ({
-    cart: true,
+    cart: false,
     toggle: () => set((state) => ({...state, cart: !state.cart }))
 }));

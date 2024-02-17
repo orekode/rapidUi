@@ -63,6 +63,17 @@ img {
     background-size: contain;
 }
 
+.bg-text {
+    background-image: url('/images/exchange.avif');
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: contain;
+}
+
+.w-minus-250 {
+    width: calc(100% - 250px);
+}
+
 @media (max-width: 600px) {
     .grid-box {
         grid-template-columns: 1fr 1fr;

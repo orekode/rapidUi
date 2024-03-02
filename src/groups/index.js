@@ -1,7 +1,7 @@
 
 
 export * as Products    from "./Products";
-export * as Categories  from "./Categories";
+export * as Categories  from "../components/Categories";
 
 export { default as Nav         } from "./Nav";
 export { default as Reviews     } from "./Reviews";

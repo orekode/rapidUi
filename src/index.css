@@ -50,6 +50,15 @@ img {
     width: 100%;
 }
 
+.grid-250 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.grid-250.fill {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
 .grid-box {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -78,6 +87,11 @@ img {
     .grid-box {
         grid-template-columns: 1fr 1fr;
     }
+}
+
+.grid-500 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
 }
 
 .text-animate {
@@ -133,3 +147,72 @@ img {
         top: 10%;
     }
 }
+
+
+
+
+.admin {
+    --size: 300px;
+    --nav: 60px;
+}
+
+.admin.active {
+    --size: 0px;
+}
+
+.admin-left {
+    border-right: 1px solid #5555552a;
+    width: var(--size);
+}
+
+.admin-right {
+    width: calc(100% - var(--size));
+}
+
+.admin > * {
+    height: 100vh;
+}
+
+.admin-nav {
+    height: var(--nav);
+    border-radius: 50px;
+}
+
+.admin-content {
+    height: calc(100% - var(--nav));
+    overflow-y: scroll;
+}
+
+
+.table {
+    display: grid;
+    grid-template-columns: 120px 2fr repeat(2, 1fr) 100px;
+    border: 1px solid #88888876;
+    border-radius: 10px;
+}
+
+.cell {
+    border-left: 1px solid #88888876;
+    padding: 1rem;
+}
+
+.cell-center {
+    @apply flex items-center justify-center;
+}
+
+.cell:first-of-type {
+    border-left: none;
+}
+
+.ql-toolbar.ql-snow {
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    @apply dark:border-[#444];
+}
+
+.ql-container.ql-snow, .ql-editor {
+    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+    @apply dark:border-[#444] min-h-[500px];
+}
+

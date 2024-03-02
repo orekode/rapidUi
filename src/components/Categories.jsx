@@ -2,7 +2,7 @@
 
 
 import {} from 'react'
-import { Scroll } from '../components'
+import { Scroll } from '.'
 
 export const Popular = () => {
   return (

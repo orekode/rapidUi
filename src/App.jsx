@@ -3,7 +3,18 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 
 import { Root } from '@/layouts';
 import General from './layouts/General';
-import { Exchange, Home, Shop } from './pages';
+
+import { 
+  Exchange, Home, 
+  Shop, Product, 
+  ProductExchange, 
+  Checkout, Login, 
+  SignUp, Products, 
+  NewProduct, Categores, NewCategory 
+} from './pages';
+
+import Admin from './layouts/Admin';
+import NewCategories from './pages/admin/categories/NewCategory';
 
 function App() {
 
@@ -13,11 +24,25 @@ function App() {
 
         <Route element={ <General />}>
 
-          <Route index            element={<Home     />} />
-          <Route path="shop"      element={<Shop     />} />
-          <Route path="exchange"  element={<Exchange />} />
+          <Route index                      element={<Home            />}  />
+          <Route path="shop"                element={<Shop            />}  />
+          <Route path="exchange"            element={<Exchange        />}  />
+          <Route path="product"             element={<Product         />}  />
+          <Route path="exchange/product"    element={<ProductExchange />}  />
+          <Route path="checkout"            element={<Checkout        />}  />
+          <Route path="login"               element={<Login           />}  />
+          <Route path="signup"               element={<SignUp          />}  />
 
         </Route>
+
+        <Route path="admin"  element={ <Admin /> }>
+          <Route index             element={<Products   />} />
+          <Route path="products"   element={<Products   />} />
+          <Route path="categories" element={<Categores  />} />
+        </Route>
+
+        <Route path="admin/product/new"    element={<NewProduct  />} />
+        <Route path="admin/category/new"   element={<NewCategory />} />
 
       </Route>
     )

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Md, Sm } from '../components/Button'
 import { Side } from '../components/Scroll'
 import { Products } from '../groups'
-import { PopularCircle } from '../groups/Categories'
+import { PopularCircle } from '../components/Categories'
 import { Filter, FilterX, ListFilter } from 'lucide-react'
 import ProductFilters from '../groups/ProductFilters'
 

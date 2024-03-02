@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Footer, Image, LeftRightBanner, PageScroller, Scroll } from '../components';
 import { Categories, HomeHeader, Nav, Products, Reviews } from '../groups';
 import { Outlet } from 'react-router-dom';
+import { useMode } from '../store/general';
 
 const Root = () => {
 
-  
+  const { mode } = useMode(state => state);
 
-  const title = 'Free Delivery For Orders On Campus.'.split('');
+  useEffect(() => {
+      if (mode === 'light') document.documentElement.classList.remove('dark')
+      else document.documentElement.classList.add('dark')
+  }, [mode]);
 
   return (
     <div className=''>

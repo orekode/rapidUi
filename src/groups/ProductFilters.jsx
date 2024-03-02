@@ -20,7 +20,7 @@ const ProductFilters = ({ initShow }) => {
         <motion.div initial={{opacity: 0}} animate={{opacity: 1}} className='fixed top-0 right-0 w-screen h-screen z-[50]'>
             <div className="h-full w-full backdrop-blur-xl flex justify-end relative ">
                 <div className="flex-grow h-full relative">
-                    <div className="h-full p-6 overflow-y-scroll ">
+                    <div className="h-full p-6 overflow-y-scroll bg-white dark:bg-[#0e0e0e] bg-opacity-80">
                         <div className="search-box flex gap-3 absolute top-0 left-0 w-full p-4 bg-white dark:bg-[#0e0e0e] z-50">
                             <div className="input border dark:border-[#444] w-full rounded-3xl ">
                                 <input type="text" placeholder='Type your search here...' className='w-full h-full bg-transparent px-6 rounded-3xl' />
@@ -35,7 +35,7 @@ const ProductFilters = ({ initShow }) => {
                             </div>
                         </div>
 
-                        <div className="p-3 relative z-0 max-[400px]:px-0">
+                        <div className="p-3 relative z-0 max-[400px]:px-0 ">
                             <Products.Trending />
                         </div>
 

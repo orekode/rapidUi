@@ -27,11 +27,6 @@ const Nav = () => {
 
     const [showMenu, setShowMenu] = useState(false);
 
-    useEffect(() => {
-        if (mode === 'light') document.documentElement.classList.remove('dark')
-        else document.documentElement.classList.add('dark')
-    }, [mode]);
-
 
     return (
         <>
@@ -51,8 +46,12 @@ const Nav = () => {
                         </div>
 
                         <div className="flex gap-3">
-                            <Button.Sm>Log In</Button.Sm>
-                            <Button.Sm baseColor='bg-red-500' hoverColor='bg-blue-500'>Sign Up</Button.Sm>
+                            <Link to={'/login'}>
+                                <Button.Sm>Log In</Button.Sm>
+                            </Link>
+                            <Link to={'/signup'}>
+                                <Button.Sm baseColor='bg-red-500' hoverColor='bg-blue-500'>Sign Up</Button.Sm>
+                            </Link>
 
                             <div onClick={toggle} className="h-[35px] w-[35px] rounded-full bg-gray-200 dark:bg-black border border-gray-500 dark:border-yellow-400 dark:text-yellow-300  flex-center scale-75">
                                 {mode == 'light' ?
@@ -84,8 +83,12 @@ const Nav = () => {
                 </div>
 
                 <div className="btns mx-6 flex flex-col gap-3 py-6">
-                    <Button.Sm width="w-full text-center">Log In</Button.Sm>
-                    <Button.Sm width="w-full text-center" baseColor='bg-red-500' hoverColor='bg-blue-500'>Sign Up</Button.Sm>
+                    <Link to={'/login'}>
+                        <Button.Sm>Log In</Button.Sm>
+                    </Link>
+                    <Link to={'/signup'}>
+                        <Button.Sm baseColor='bg-red-500' hoverColor='bg-blue-500'>Sign Up</Button.Sm>
+                    </Link>
                 </div>
             </div>
 

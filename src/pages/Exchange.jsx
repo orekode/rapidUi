@@ -1,10 +1,18 @@
 
 
 import { Plus, Search } from 'lucide-react'
-import React from 'react'
-import { PopularCircle } from '../groups/Categories'
+import React, { useState } from 'react'
+import { PopularCircle } from '../components/Categories'
+import '@appnest/masonry-layout'
+import { Card } from '../components'
 
 const Exchange = () => {
+  const [ products, setProducts ] = useState([]);
+
+  fetch('https://fakestoreapi.com/products').
+    then( result => result.json()).
+    then(result => setProducts(result));
+
   return (
     <div>
         <div className="spacing flex gap-6">
@@ -36,6 +44,14 @@ const Exchange = () => {
 
         <div className="spacing">
           <PopularCircle />
+        </div>
+
+        <div className="spacing">
+          <masonry-layout maxcolwidth="300">
+            {products.map( item => 
+              <Card.Mason item={item} />
+            )}
+          </masonry-layout>
         </div>
     </div>
   )

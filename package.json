@@ -11,13 +11,18 @@
   },
   "dependencies": {
     "@appnest/masonry-layout": "^2.2.3",
+    "axios": "^1.6.7",
     "framer-motion": "^11.0.3",
     "lucide-react": "^0.316.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-loading-skeleton": "^3.4.0",
+    "react-query": "^3.39.3",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.21.3",
+    "sweetalert2": "^11.10.5",
     "tailwind-scrollbar": "^3.0.5",
+    "zod": "^3.22.4",
     "zustand": "^4.5.0"
   },
   "devDependencies": {

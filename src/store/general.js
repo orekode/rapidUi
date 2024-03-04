@@ -9,3 +9,10 @@ export const useCart = create((set) => ({
     cart: false,
     toggle: () => set((state) => ({...state, cart: !state.cart }))
 }));
+
+export const useLoading = create((set) => ({
+    show: false,
+    toggle:      () => set((state) => ({...state, show: !state.show })),
+    showLoading: () => set((state) => ({...state, show: true   })),
+    hideLoading: () => set((state) => ({...state, show: false  })), 
+}));

@@ -17,8 +17,6 @@ const NewProduct = () => {
         set_details({...clone_details});
     }
 
-
-
     return (
         <div>
             <div className="spacing">

@@ -2,16 +2,18 @@ import { Image as ImageIcon, X } from 'lucide-react'
 import { useRef, useState } from 'react';
 import { getResourceType } from '../utils/files';
 
-export const Image = ({ closeCallback=null, ...props}) => {
+export const Image = ({ uploadCallback=()=>{}, closeCallback=null, initUrl=null, ...props}) => {
 
     const inputRef = useRef();
 
-    const [image, set_image] = useState(null);
+    const [image, set_image] = useState(initUrl);
     const [show, set_show]   = useState(true);
 
     const uploadImage = (event) => {
-        const image = URL.createObjectURL(event.target.files[0]);
-        set_image(image);
+        const image = event.target.files[0];
+        const url = URL.createObjectURL(image);
+        set_image(url);
+        uploadCallback(image);
     }
 
     if(show)

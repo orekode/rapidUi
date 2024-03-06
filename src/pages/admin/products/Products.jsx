@@ -2,16 +2,17 @@ import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { useEffect, useState }  from 'react';
 import { Button }               from '../../../components';
 import { Link } from 'react-router-dom';
+import { useItems } from '../../../apiCalls/read';
 
 const Products = () => {
 
-  const [ products, setProducts ] = useState([]);
+  const [ page, set_page ] = useState(1);
+  const [ filters, set_filters ] = useState({});
 
-  useEffect(() => {
-      fetch('https://fakestoreapi.com/products').
-                              then( result => result.json()).
-                              then(result => setProducts(result));
-  }, []);
+  const { data, isLoading, isError } = useItems({
+    target: 'products',
+    params: { page, filters }
+  });
 
 
   return (
@@ -32,24 +33,26 @@ const Products = () => {
         </div>
       </div>
       <div className="my-3">
-        {products.map((item) =>
-          <div key={item.id} tabIndex={item.id} className="table hover:bg-gray-200 dark:hover:bg-neutral-900 shadow my-3 transition-all duration-200 active:scale-90">
+        {(data && data.data && data.data.map) && data.data.map((item) =>
+          <div key={item.id} tabIndex={item.id} className="table hover:bg-gray-200 dark:hover:bg-neutral-900 shadow my-3 transition-all duration-200 ">
             <div className="cell h-[120px] p-3">
               <img src={item.image} alt="" className="h-full w-full object-contain" />
             </div>
             <div className="cell cell-center text-center">
-              <span>{item.title}</span>
+              <span>{item.name}</span>
             </div>
             <div className="cell cell-center gap-1">
               <span>Ghc</span>
               <span className='text-2xl'>{item.price}</span>
             </div>
             <div className="cell cell-center gap-1">
-              <span>{item.rating.count}</span>
+              <span>{item.quantity}</span>
               <span>units</span>
             </div>
             <div className="cell cell-center">
-              <Button.Sm>Edit</Button.Sm>
+              <Link to={`/admin/product/edit/${item.id}`}>
+                <Button.Sm>Edit</Button.Sm>
+              </Link>
             </div>
           </div>
         )}

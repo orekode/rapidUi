@@ -10,7 +10,9 @@ import {
   ProductExchange, 
   Checkout, Login, 
   SignUp, Products, 
-  NewProduct, Categores, NewCategory, EditCategory 
+  NewProduct, Categores, 
+  NewCategory, EditCategory,
+  EditProduct
 } from './pages';
 
 import Admin from './layouts/Admin';
@@ -31,11 +33,11 @@ function App() {
           <Route path="exchange/product"    element={<ProductExchange />}  />
           <Route path="checkout"            element={<Checkout        />}  />
           <Route path="login"               element={<Login           />}  />
-          <Route path="signup"               element={<SignUp          />}  />
+          <Route path="signup"              element={<SignUp          />}  />
 
         </Route>
 
-        <Route path="admin"  element={ <Admin /> }>
+        <Route path="admin"        element={ <Admin /> }>
           <Route index             element={<Products   />} />
           <Route path="products"   element={<Products   />} />
           <Route path="categories" element={<Categores  />} />
@@ -44,6 +46,7 @@ function App() {
         <Route path="admin/product/new"             element={<NewProduct  />}  />
         <Route path="admin/category/new"            element={<NewCategory />}  />
         <Route path="admin/category/edit/:id"       element={<EditCategory />} />
+        <Route path="admin/product/edit/:id"        element={<EditProduct />} />
 
       </Route>
     )

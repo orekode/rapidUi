@@ -13,6 +13,7 @@ export { default as SignUp }           from "./SignUp";
 
 export { default as Products        }      from "./admin/products/Products";
 export { default as NewProduct      }      from "./admin/products/NewProduct";
+export { default as EditProduct     }      from "./admin/products/EditProduct";
 export { default as Categores       }      from "./admin/categories/Categories";
 export { default as NewCategory     }      from "./admin/categories/NewCategory";
 export { default as EditCategory    }      from "./admin/categories/EditCategory";

@@ -1,9 +1,15 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { withStorageDOMEvents } from ".";
 
-export const useMode = create((set) => ({
-    mode: 'dark',
-    toggle:  () => set((state) => ({ mode: state.mode == 'light' ? 'dark' : 'light' })),
-}));
+export const useMode = create( persist( (set) => ({
+        mode: 'dark',
+        toggle:  () => set((state) => ({ mode: state.mode == 'light' ? 'dark' : 'light' })),
+    }),
+    {
+        name: "mode"
+    })
+);
 
 export const useCart = create((set) => ({
     cart: false,
@@ -16,3 +22,7 @@ export const useLoading = create((set) => ({
     showLoading: () => set((state) => ({...state, show: true   })),
     hideLoading: () => set((state) => ({...state, show: false  })), 
 }));
+
+withStorageDOMEvents(useMode);
+withStorageDOMEvents(useCart);
+withStorageDOMEvents(useLoading);

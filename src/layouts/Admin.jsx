@@ -36,7 +36,7 @@ const Admin = () => {
   return (
     <div className='bg-gray-200 dark:bg-[#0e0e0e] dark:text-white bg-opacity-70'>
       <div className={`admin ${ menu && "active" } flex shadow dark:shadow-black`}>
-        <div className={`admin-left overflow-hidden transition-all duration-200 bg-white dark:bg-[#111] shadow h-screen overflow-y-scroll`}>
+        <div className={`admin-left overflow-hidden transition-all duration-200 bg-white dark:bg-[#111] shadow h-screen overflow-y-scroll scrollbar-thin scrollbar-track-transparent dark:scrollbar-track-[#111] scrollbar-thumb-blue-700`}>
 
           <div className="font-bold text-xl p-6">
             RapidCrew
@@ -71,7 +71,7 @@ const Admin = () => {
           </div>
 
         </div>
-        <div className="admin-right transition-all duration-200 overflow-hidden h-screen">
+        <div className="admin-right transition-all duration-200 overflow-hidden h-screen ">
 
           <div className="p-6 pb-3">
             <nav className='admin-nav bg-white dark:bg-[#111] shadow px-6 py-2 flex items-center justify-between rounded-3xl'>
@@ -86,7 +86,7 @@ const Admin = () => {
             </nav>
           </div>
 
-          <div className="admin-content p-9 py-3 pb-24">
+          <div className="admin-content p-9 py-3 pb-24 scrollbar-thin scrollbar-track-transparent dark:scrollbar-track-[#111] scrollbar-thumb-blue-700">
               <Outlet />
           </div>
 

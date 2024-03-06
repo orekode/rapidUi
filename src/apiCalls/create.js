@@ -20,12 +20,11 @@ export const Create = async (target, values, title="Create Successfull") => {
     catch(error) {
         console.log(error);
 
-        if(error?.response?.data.errors)
             return {
                 status: "error",
                 title: "An Error Occured",
                 text: "Please check your inputs and try again",
-                errors: error.response.data.errors || {}
+                errors: error?.response?.data?.errors || {}
             };
 
     }

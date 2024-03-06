@@ -1,6 +1,5 @@
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
-import { useEffect, useState }  from 'react';
-import { Button, Errors, Pagination }               from '../../../components';
+import { useState }  from 'react';
+import { Button, Errors, Pagination, Search } from '../../../components';
 import { Link } from 'react-router-dom';
 import { useItems } from '../../../apiCalls/read';
 
@@ -8,13 +7,15 @@ import { useItems } from '../../../apiCalls/read';
 const Categories = () => {
 
   const [ page, set_page ] = useState(1);
+  const [ filters, set_filters ] = useState({});
 
   const { data, isLoading, isError } = useItems({
     target: 'categories',
-    params: { page }
+    params: { page, filters }
   });
 
-  console.log(data);
+
+
 
 
   return (
@@ -22,24 +23,17 @@ const Categories = () => {
       <div className="flex items-center justify-between mb-6">
         <div className="font-bold text-xl">Categories</div>
 
-          <Link to={'/admin/category/new'}>
-            <Button.Sm>Add New</Button.Sm>
-          </Link>
+        <Link to={'/admin/category/new'}>
+          <Button.Sm>Add New</Button.Sm>
+        </Link>
       </div>
 
-      <div className="search-box flex gap-3">
-        <div className="input border border-neutral-400 dark:border-[#444] w-full rounded-3xl ">
-          <input type="text" placeholder='type your search here...' className='w-full h-full bg-transparent px-6 rounded-3xl' />
-        </div>
-        <div onClick={() => setVisible(!visible)} className="filter dark:border-[#444] bg-blue-600 hover:bg-red-600 active:scale-90 text-white w-[50px] h-[50px] rounded-full flex-center">
-          <Search />
-        </div>
-      </div>
+      <Search.Simple callback={set_filters} />
 
-      <div className="my-3 mt-6 grid-250 fill gap-6">
+      <div className="my-3 mt-6 grid-200 fill gap-6">
         {(data && data.data && data.data.map) && data.data.map((item) =>
-          <div key={item.id} tabIndex={item.id} className="bg-gray-200 dark:bg-neutral-900 shadow transition-all duration-200 active:scale-90 rounded-3xl relative">
-            <div className="image h-[250px] p-12 pb-3">
+          <div key={item.id} tabIndex={item.id} className="bg-gray-200 dark:bg-neutral-900 shadow transition-all duration-200 rounded-3xl relative">
+            <div className="image h-[230px] p-3 pb-3">
               <img src={item.image} alt="" className="object-contain h-full w-full" />
             </div>
             <div className="details p-6 pb-12 pt-0">
@@ -57,12 +51,15 @@ const Categories = () => {
         )}
       </div>
 
-      <Errors.Empty data={data?.data} title="No Categories Available" content={'Click the "Add New" button to create categories'} />
+      {(!isLoading && !isError) &&
+        <Errors.Empty data={data?.data} title="No Categories Available" content={'Click the "Add New" button to create categories'} />
+      }
+
       {isError && <Errors.Network />}
 
       <Pagination meta={data?.meta} setPage={set_page} />
     </div>
-  )
-}
+  );
+};
 
-export default Categories
+export default Categories;

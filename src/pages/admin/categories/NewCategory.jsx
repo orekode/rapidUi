@@ -16,7 +16,6 @@ const NewCategory = () => {
 
     const { showLoading, hideLoading } = useLoading();
 
-
     const set_detail = (target, value) => {
       const clone_details = {...details};
       clone_details[target] = value;
@@ -44,24 +43,39 @@ const NewCategory = () => {
           </div>
 
           <div className="max-w-[500px] mx-auto">
+            
             <div className="mx-auto h-[300px] w-[300px]">
-              <Uploads.Image uploadCallback={(image) => set_detail("image", image)} name="image" />
-              <div className="error text-red-600 text-xs">{errors.image}</div>
+              <Uploads.Image 
+                uploadCallback={(image) => set_detail("image", image)} 
+                name="image"
+                error={errors.Image}
+              />
             </div>
 
-            <div className="input flex flex-col gap-1 my-4">
-              <label htmlFor="full_name" className='text-gray-400'>Parent Category</label>
-              <Inputs.Select target="categories" callback={(item) => set_detail("parent", item.id)}></Inputs.Select>
-              <div className="error text-red-600 text-xs">{errors.parent}</div>
-            </div>
+            <Inputs.Select
+              name="parent"
+              label="Parent Category"
+              target="categories"
+              callback={(item) => set_detail("parent", item.id)}
+              initValue={["id", details?.parent]}
+              error={errors.parent}
+            />
 
-            <div className="input flex flex-col gap-1 mb-4">
-              <label htmlFor="name" className='text-gray-400'>Category Name</label>
-              <input onChange={(event) => set_detail("name", event.target.value )} type="text" name="name" className="border dark:bg-[#111] border-neutral-300 dark:border-[#444] px-3 py-1.5 text-lg rounded-3xl"/>
-              <div className="error text-red-600 text-xs">{errors.name}</div>
-            </div>
+            <Inputs.Text 
+              name="name" 
+              label="Category Name" 
+              callback={set_detail}
+              value={details.name}
+              error={errors.name} 
+            />
 
-            <Button.Md width='w-full' contentClass='w-full' onClick={handleSubmit}>Save Category</Button.Md>
+            <Button.Md 
+              width='w-full'
+              contentClass='w-full'
+              onClick={handleSubmit}
+            >
+              Save Category
+            </Button.Md>
 
           </div>
 

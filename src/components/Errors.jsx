@@ -54,3 +54,24 @@ export const MdCard = () => {
   )
 }
 
+export const Table = () => {
+  return (
+    <div className="table hover:bg-gray-200 dark:hover:bg-neutral-900 shadow my-3 transition-all duration-200 ">
+      <div className="cell h-[120px] p-3">
+        <Skeleton containerClassName='w-full h-full block' className='block h-full w-full'/>
+      </div>
+      <div className="cell cell-center text-center">
+        <Skeleton containerClassName='w-full h-full block' className='block h-full w-full'/>
+      </div>
+      <div className="cell cell-center gap-1">
+        <Skeleton containerClassName='w-full h-full block' className='block h-full w-full'/>
+      </div>
+      <div className="cell cell-center gap-1">
+        <Skeleton containerClassName='w-full h-full block' className='block h-full w-full'/>
+      </div>
+      <div className="cell cell-center">
+        <Skeleton containerClassName='w-full h-full block' className='block h-full w-full'/>
+      </div>
+    </div>
+  );
+}

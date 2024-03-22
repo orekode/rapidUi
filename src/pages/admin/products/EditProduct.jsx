@@ -1,26 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button, Inputs, Uploads } from '../../../components'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Create } from '../../../apiCalls/create';
 import Swal from 'sweetalert2';
 import { useLoading } from '../../../store/general';
 import { useItem } from '../../../apiCalls/read';
+import { Trash } from 'lucide-react';
 
 
 const EditProduct = () => {
 
     const { id } = useParams();
 
-    const { data } = useItem({target: `products/${id}`});
+    const navigate = useNavigate();
+
+    const { showLoading, hideLoading } = useLoading();
+
+    const { data, isLoading, isError } = useItem({target: `products/${id}`});
 
     const [details, set_details] = useState();
     const [categories, set_categories] = useState([]);
+    const [brands, set_brands] = useState([]);
     const [images_removed, set_images_removed] = useState([]);
 
     const [errors, set_errors]   = useState({});
     const [images, set_images]   = useState([0]);
-
-    const { showLoading, hideLoading } = useLoading();
 
     const set_detail = (target, value) => {
         const clone_details = {...details};
@@ -29,16 +33,54 @@ const EditProduct = () => {
     }
 
     const handleSubmit = async () => {
+        console.log(images_removed);
         showLoading();
           const images_upload = images.filter( image => image instanceof File );
           let category_ids = '';
+          let brand_ids = '';
           categories.forEach( category => category_ids += ` ${category.id} `);
+          brands.forEach( brand => brand_ids += ` ${brand.id} `);
           
-          const response = await Create('products', {...details, images: images_upload, images_removed, categories: category_ids});
+          const response = await Create(`products/${id}`, {
+            ...details, 
+            images: images_upload, 
+            images_removed, 
+            categories: category_ids,
+            brands: brand_ids,
+            "_method": "PATCH"
+          });
+
           Swal.fire({...response, icon: response?.status});
   
           if(response?.status == 'success') navigate(-1);
           set_errors(response?.errors)
+        hideLoading();
+    }
+
+
+    const handleDelete = async () => {
+        showLoading();
+
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        })
+
+        if (result.isConfirmed) {
+
+            const response = await Create(`products/${id}`, {_method: "delete"}, "Product Deleted Successfully");
+
+            Swal.fire({...response, icon: response?.status});
+  
+            if(response?.status == 'success') navigate(-1);
+        }
+        
+          
         hideLoading();
     }
   
@@ -72,13 +114,31 @@ const EditProduct = () => {
         set_categories([...check]);
     }
 
+    const handleBrandSelect = (brand) => {
+        const check = brands.filter( item => item.id == brand.id);
+
+        if(check.length <= 0)
+            set_brands([...brands, brand]);
+    }
+
+    const removeBrand = (brand) => {
+        const check = brands.filter( item => item.id !== brand.id);
+
+        set_brands([...check]);
+    }
+
     useEffect(() => {
-        set_details({...data, init_long_description: data?.long_description});
+        set_details({...data, init_long_description: data?.long_description, init_short_description: data?.short_description});
         set_categories(data?.categories);
+        set_brands(data?.brands);
         set_images(data?.images);
+
+        isError || isLoading ? showLoading() : hideLoading();
+
     }, [data])
 
-    console.log(details);
+
+
 
     return (
         <div>
@@ -91,8 +151,14 @@ const EditProduct = () => {
 
                 <div className="flex items-center justify-between">
                     <div className="font-bold text-3xl my-6 mb-4">Edit Product</div>
-                    <div className="w-max">
-                        <Button.Md onClick={handleSubmit}>Save Product</Button.Md>
+                    <div className="flex items-center gap-1">
+                        <div className="w-max">
+                            <Button.Md onClick={handleSubmit}>Save Product</Button.Md>
+                        </div>
+
+                        <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white shadow h-[40px] w-[40px] rounded-3xl flex items-center justify-center">
+                            <Trash />
+                        </button>
                     </div>
                 </div>
 
@@ -128,13 +194,15 @@ const EditProduct = () => {
                             />
                         </div>
 
-                        <Inputs.TextArea
-                            name="short_description" 
-                            label="Short Description" 
-                            callback={set_detail}
-                            value={details?.short_description}
-                            error={errors?.short_description} 
-                        />
+                        <div className="short">
+                            <Inputs.Editor 
+                                name="short_description" 
+                                label="Short Description" 
+                                callback={set_detail}
+                                value={details?.init_short_description}
+                                error={errors?.short_description} 
+                            />
+                        </div>
 
                         <Inputs.Select
                             name="categories"
@@ -148,19 +216,27 @@ const EditProduct = () => {
                         <div className="selected-categories flex items-center gap-1.5">
                             {categories?.map(item => 
                                 <div 
-                                    onClick={removeCategory} 
+                                    onClick={() => removeCategory(item)} 
                                     className="bg-neutral-200 dark:bg-[#222] hover:bg-red-500 hover:text-white active:scale-90 transition-all duration-200 px-3 py-1.5 rounded-2xl shadow">{item.name}</div>
                             )}
                         </div>
 
                         <Inputs.Select
-                            name="parent"
+                            name="brands"
                             label="Brand"
-                            target="categories"
-                            callback={(item) => set_detail("parent", item.id)}
-                            initValue={["id", details?.parent]}
-                            error={errors?.parent}
+                            target="brands"
+                            callback={handleBrandSelect}
+                            initValue={["id", details?.brands]}
+                            error={errors?.brands}
                         />
+
+                        <div className="selected-categories flex items-center gap-1.5">
+                            {brands?.map(item => 
+                                <div 
+                                    onClick={() => removeBrand(item)} 
+                                    className="bg-neutral-200 dark:bg-[#222] hover:bg-red-500 hover:text-white active:scale-90 transition-all duration-200 px-3 py-1.5 rounded-2xl shadow">{item.name}</div>
+                            )}
+                        </div>
 
                         <Inputs.Editor 
                             name="long_description" 

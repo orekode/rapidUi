@@ -26,7 +26,7 @@ export const useItem = ({ target, params={} }) => {
         return response.data.data || response.data || response;
 
     }, {
-        staleTime: 10000, // Cache data for 10 seconds
-        cacheTime: 60000 * 25,
+        // staleTime: 10000, // Cache data for 10 seconds
+        // cacheTime: 60000 * 25,
     });
 }

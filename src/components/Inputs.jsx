@@ -124,7 +124,7 @@ export const Editor = ({ name, label, callback, value, error, ...props }) => {
     }, [value]);
 
     return (
-        <div className="input flex flex-col gap-1 my-3">
+        <div className={`input flex flex-col gap-1 my-3 ${props?.readOnly ? 'readonly' : '' }`}>
             <label htmlFor={name} className='text-gray-400'>{label}</label>
             <ReactQuill ref={quillRef} onChange={handleChange} {...props}/>
             <div className="error text-red-600 text-xs">

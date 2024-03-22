@@ -2,19 +2,33 @@
 import { ChevronRight, ListFilter, X } from 'lucide-react'
 import { Products } from '.'
 import { motion } from 'framer-motion'
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-const ProductFilters = ({ initShow }) => {
+const ProductFilters = ({ initShow, initSearch = '' }) => {
 
     const [visible, setVisible] = initShow;
     const [show, setShow] = useState(true);
-    const body = document.querySelector('body')
+    const [search, setSearch] = useState(initSearch);
+    const body = document.querySelector('body');
+
+    const inputRef = useRef();
+
+    useEffect(() => {
+        if(initSearch.replaceAll(' ', '').length > 0) {
+            setSearch(initSearch);
+            setTimeout(() => {
+                inputRef.current.focus();
+            }, 300)
+        }
+    }, [initSearch]);
 
     if(!visible) {
-        body.style.overflow = 'scroll'
+        body.style.overflowY = 'scroll'
         return <></>;
     }
     body.style.overflow = 'hidden';
+    
+    console.log(search, initSearch);
 
     return (
         <motion.div initial={{opacity: 0}} animate={{opacity: 1}} className='fixed top-0 right-0 w-screen h-screen z-[50]'>
@@ -23,7 +37,7 @@ const ProductFilters = ({ initShow }) => {
                     <div className="h-full p-6 overflow-y-scroll bg-white dark:bg-[#0e0e0e] bg-opacity-80">
                         <div className="search-box flex gap-3 absolute top-0 left-0 w-full p-4 bg-white dark:bg-[#0e0e0e] z-50">
                             <div className="input border dark:border-[#444] w-full rounded-3xl ">
-                                <input type="text" placeholder='Type your search here...' className='w-full h-full bg-transparent px-6 rounded-3xl' />
+                                <input ref={inputRef} value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder='Type your search here...' className='w-full h-full bg-transparent px-6 rounded-3xl' />
                             </div>
 
                             <div onClick={() => setShow(!show)} className="filter dark:border-[#444] bg-blue-600 hover:bg-red-600 active:scale-90 text-white w-[50px] h-[50px] rounded-full flex-center">

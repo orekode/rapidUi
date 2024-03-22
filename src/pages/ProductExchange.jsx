@@ -23,12 +23,12 @@ const ProductExchange = () => {
       
       <div className="display-box grid grid-500 gap-12 spacing">
         <div className="left">
-          <div className="border rounded-md h-[500px] p-12">
+          <div className="border dark:border-[#262626] rounded-md h-[500px] p-12">
             <img src={product.image} alt="" className="object-contain h-full w-full" />
           </div>
           <div className="images flex items-center justify-center gap-6 py-6">
             {Array.from({length: 4}, (_, index) => 
-              <div className="border h-[150px] w-[150px] rounded-lg p-6">
+              <div className="border dark:border-[#262626] h-[150px] w-[150px] rounded-lg p-6">
                 <img src={product.image} alt="" className="object-contain h-full w-full" />
               </div>
             )}

@@ -7,13 +7,12 @@ import { useLoading } from '../../../store/general';
 import { Create } from '../../../apiCalls/create';
 import Swal from 'sweetalert2';
 import { useItem } from '../../../apiCalls/read';
-import { Trash } from 'lucide-react';
 
-const EditCategory = () => {
+const EditBrand = () => {
 
     const { id } = useParams();
 
-    const { data } = useItem({target: `categories/${id}`});
+    const { data } = useItem({target: `brands/${id}`});
 
     
     const [details, set_details] = useState({});
@@ -32,38 +31,13 @@ const EditCategory = () => {
 
     const handleSubmit = async () => {
       showLoading();
-        const response = await Create(`categories/${id}`, {...details, "_method" : "PATCH"}, "Update Successfull");
+        const response = await Create(`brands/${id}`, {...details, "_method" : "PATCH"}, "Update Successfull");
         Swal.fire({...response, icon: response?.status});
         if(response?.status == 'success') navigate(-1);
         set_errors(response?.errors)
-      hideLoading();
-    }
-
-    const handleDelete = async () => {
-      showLoading();
-
-      const result = await Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!"
-      })
-
-      if (result.isConfirmed) {
-
-          const response = await Create(`categories/${id}`, {_method: "delete"}, "Category Deleted Successfully");
-
-          Swal.fire({...response, icon: response?.status});
-
-          if(response?.status == 'success') navigate(-1);
-      }
-      
         
       hideLoading();
-  }
+    }
 
     console.log(data, details);
 
@@ -82,7 +56,7 @@ const EditCategory = () => {
             <Link to={-1}>
               <Button.Sm baseColor='bg-black'>Back</Button.Sm>
             </Link>
-            <div className="font-bold text-3xl">Edit Category</div>
+            <div className="font-bold text-3xl">Edit Brand</div>
           </div>
 
           <div className="max-w-[500px] mx-auto">
@@ -99,8 +73,8 @@ const EditCategory = () => {
             
             <Inputs.Select
               name="parent"
-              label="Parent Category"
-              target="categories"
+              label="Parent Brand"
+              target="brands"
               callback={(item) => set_detail("parent", item.id)}
               initValue={["id", details?.parent]}
               error={errors.parent}
@@ -109,25 +83,19 @@ const EditCategory = () => {
 
             <Inputs.Text 
               name="name" 
-              label="Category Name" 
+              label="Brand Name" 
               callback={set_detail}
               value={details.name}
               error={errors.name} 
             />
 
-            <div className="flex items-center gap-1">
-              <Button.Md 
-                width='w-full' 
-                contentClass='w-full' 
-                onClick={handleSubmit}
-              >
-                Edit Category
-              </Button.Md>
-
-              <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white shadow h-[40px] w-[40px] rounded-3xl flex items-center justify-center">
-                  <Trash />
-              </button>
-            </div>
+            <Button.Md 
+              width='w-full' 
+              contentClass='w-full' 
+              onClick={handleSubmit}
+            >
+              Edit Brand
+            </Button.Md>
 
           </div>
 
@@ -136,4 +104,4 @@ const EditCategory = () => {
     )
 }
 
-export default EditCategory
+export default EditBrand

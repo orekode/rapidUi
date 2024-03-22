@@ -12,6 +12,8 @@ export const Create = async (target, values, title="Create Successfull") => {
             }
         });
 
+        console.log(result);
+
         if(result.status == "200" || result.status == "201") return {
             status: "success",
             title

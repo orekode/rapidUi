@@ -11,9 +11,9 @@
 body {
     font-family: 'Gowun Batang', serif;
     font-family: 'Space Grotesk', sans-serif;
-    user-select: none;
-
-    @apply dark:bg-[#0e0e0e] dark:text-white transition-all duration-200;
+    /* user-select: none; */
+    overflow-x: hidden;
+    @apply dark:bg-[#0e0e0e] dark:text-white transition-all duration-200 ;
 }
 
 body, nav > .flex-between {
@@ -219,7 +219,20 @@ img {
 .ql-container.ql-snow, .ql-editor {
     border-bottom-left-radius: 1.5rem;
     border-bottom-right-radius: 1.5rem;
+    font-family: 'Space Grotesk', sans-serif;
     @apply dark:border-[#444] min-h-[500px];
+}
+
+.short .ql-container.ql-snow, .short .ql-editor {
+    @apply dark:border-[#444] min-h-[200px];
+}
+
+.readonly .ql-container.ql-snow, .short .ql-editor {
+    @apply dark:border-none border-none min-h-[200px] p-0;
+}
+
+.readonly .ql-toolbar.ql-snow {
+    display: none;
 }
 
 .icon-loading {

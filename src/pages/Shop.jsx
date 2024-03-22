@@ -1,14 +1,27 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Md, Sm } from '../components/Button'
 import { Side } from '../components/Scroll'
 import { Products } from '../groups'
 import { PopularCircle } from '../components/Categories'
 import { Filter, FilterX, ListFilter } from 'lucide-react'
 import ProductFilters from '../groups/ProductFilters'
+import { Slides } from '../components'
+import { debounce } from 'lodash'
 
 const Shop = () => {
 
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false); 
+
+  const [ search, setSearch ] = useState('');
+
+  useEffect(() => {
+    if(search.replaceAll(' ', '').length > 0) {
+      setVisible(true);
+      debounce(() => {
+        setSearch('');
+      }, 3600)();
+    }
+  }, [search])
 
   return (
     <div>
@@ -16,7 +29,7 @@ const Shop = () => {
       <div className="spacing">
         <div className="search-box flex gap-3">
           <div className="input border dark:border-[#444] w-full rounded-3xl ">
-            <input type="text" placeholder='type your search here...' className='w-full h-full bg-transparent px-6 rounded-3xl' />
+            <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder='type your search here...' className='w-full h-full bg-transparent px-6 rounded-3xl' />
           </div>
           <div onClick={() => setVisible(!visible)} className="filter dark:border-[#444] bg-blue-600 hover:bg-red-600 active:scale-90 text-white w-[50px] h-[50px] rounded-full flex-center">
             <ListFilter />
@@ -44,18 +57,8 @@ const Shop = () => {
             </div>
           </div>
           <div className="max-[890px]:hidden">
-            <div className="slide-item w-[350px] h-[200px] bg-red-500 text-white rounded-3xl grid grid-cols-12 p-4 mb-3">
-              <div className="col-span-7 flex items-center">
-                <div className="">
-                  <div className="title text-base">The title of the slide is going to be here</div>
-                  <p className="content my-2 text-xs">This is where the content of the slide is going to be placed</p>
-                  <Sm>The call to action</Sm>
-                </div>
-              </div>
-              <div className="col-span-5">
-                <img src="/images/laptop.png" alt="" className="object-contain h-full w-full" />
-              </div>
-            </div>
+            
+            <Slides.Sm />
 
             <div className="slide-item w-[350px] h-[200px] bg-orange-500 text-white rounded-3xl grid grid-cols-12 p-4">
               <div className="col-span-7 flex items-center">
@@ -72,7 +75,7 @@ const Shop = () => {
           </div>
       </div>
 
-      <div className="shorts-container spacing">
+      {/* <div className="shorts-container spacing">
         <Side gap="gap-4 max-[600px]:gap-3">
           {Array.from({length: 10}, (_, index) => 
             <div className="short h-[250px] w-[170px] max-[600px]:w-[120px] max-[600px]:h-[200px] overflow-hidden shadow bg-gray-200 rounded-xl">
@@ -80,13 +83,13 @@ const Shop = () => {
             </div>
           )}
         </Side>
-      </div>
+      </div> */}
 
       <div className="spacing">
-        <Products.Trending />
+        <Products.Shop/>
       </div>
 
-      <ProductFilters initShow={[visible, setVisible]} />
+      <ProductFilters initSearch={search} initShow={[visible, setVisible]} />
 
     </div>
   )

@@ -1,93 +1,153 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Scroll } from '../components';
+import { Button, Errors, Inputs, Scroll } from '../components';
 import { ShoppingBag, ShoppingBasket } from 'lucide-react';
 import { Products } from '../groups';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useLoading } from '../store/general';
+import { useItem } from '../apiCalls/read';
+import Skeleton from 'react-loading-skeleton';
+import { decrypt } from '../utils/encryption';
+import { useCart } from '../store/cart';
 
 const Product = () => {
 
-  const [product, setProduct] = useState({});
+  const { id } = useParams();
+
+  const [ active_image, set_active_image ] = useState('');
+
+  const navigate = useNavigate();
+
+  const { showLoading, hideLoading } = useLoading();
+
+  const { data, isLoading, isError } = useItem({target: `products/${decrypt(id)}`});
 
   const [toggle, setToggle] = useState(false);
 
-  useEffect(() => {
-      fetch('https://fakestoreapi.com/products/1').
-                              then( result => result.json()).
-                              then(result => setProduct(result));
-  }, []);
+  const { toggle_item, product_ids } = useCart();
 
-  console.log(product);
+  useEffect(() => {
+    set_active_image(data?.image);
+  }, [data]);
 
   return (
     <div>
-      
-      <div className="display-box grid grid-500 max-[650px]:block gap-12 spacing">
-        <div className="left">
-          <div className="border rounded-md h-[500px] p-12">
-            <img src={product.image} alt="" className="object-contain h-full w-full" />
+
+      {isLoading &&
+        <div className="display-box grid grid-500 max-[650px]:block gap-12 spacing">
+          <div className="left">
+            <div className="border dark:border-[#262626] rounded-md h-[500px] p-12">
+              <Skeleton containerClassName='w-full h-full block' className='block h-full w-full'/>
+            </div>
+            <div className="images py-6">
+              <Scroll.Side>
+                {Array.from({length: 4}, (_, index) => 
+                  <div className="border dark:border-[#262626] h-[150px] w-[150px] rounded-lg p-6">
+                    <Skeleton containerClassName='w-full h-full block' className='block h-full w-full'/>
+                  </div>
+                )}
+              </Scroll.Side>
+            </div>
           </div>
-          <div className="images py-6">
-            <Scroll.Side>
-              {Array.from({length: 4}, (_, index) => 
-                <div className="border h-[150px] w-[150px] rounded-lg p-6">
-                  <img src={product.image} alt="" className="object-contain h-full w-full" />
-                </div>
-              )}
-            </Scroll.Side>
+          <div className="right ">
+            <div className="name text-3xl font-bold h-[100px]">
+              <Skeleton containerClassName='w-full h-full block' className='block h-full w-full'/>
+            </div>
+            <div className="flex items-start gap-0.5 mt-3 h-[60px] w-[150px] ">
+              <Skeleton containerClassName='w-full h-full block' className='block h-full w-full'/>
+            </div>
+            <div className='my-3'>
+              <p className="h-[170px]">
+                <Skeleton containerClassName='w-full h-full block' className='block h-full w-full'/>
+              </p>
+
+              
+            </div>
+
+            <div className="flex gap-3 my-6 h-[50px] max-[650px]:flex-col">
+              <Skeleton containerClassName='w-full h-full block' className='block h-full w-full'/>
+              <Skeleton containerClassName='w-[200px] h-full block' className='block h-full w-full'/>
+            </div>
           </div>
-        </div>
-        <div className="right ">
-          <div className="name text-3xl font-bold">{product.title}</div>
-          <div className="flex items-start gap-0.5 mt-3 ">
-            <span className="text-sm">GHC</span>
-            <div className="price text-5xl font-thin opacity-80 my-3">{product.price}</div>
-          </div>
-          <div className='mb-3'>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit vitae ex nostrum, quo, reiciendis eligendi fuga ad, iste natus enim aut cupiditate! Esse excepturi accusamus amet repudiandae blanditiis, velit corporis?
-            </p>
+        </div> 
+      }
 
-            <ul className='list-disc px-12 py-3 max-[650px]:px-3'>
-              <li className='mb-1.5'>item one is here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto  </li>
-              <li className='mb-1.5'>item one is here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto  </li>
-              <li className='mb-1.5'>item one is here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto  </li>
-              <li className='mb-1.5'>item one is here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto  </li>
-            </ul>
-          </div>
+      {isError && <Errors.Network />}
 
-          <div className="flex gap-3 my-6 max-[650px]:flex-col">
-
-            <Button.Md width='w-full' contentClass='flex items-center justify-center w-full gap-1'>
-              <span className='whitespace-nowrap'>Buy Now</span>
-              <ShoppingBasket />
-            </Button.Md>
-
-            <button className="text-center p-3 px-6 rounded-3xl border hover:bg-black hover:text-white active:scale-90 transition-all duration-200 flex items-center justify-center gap-1">
-              <span className='whitespace-nowrap'>Add To Cart</span>
-              <ShoppingBag />
-            </button>
-
-          </div>
-        </div>
-      </div>
-
-      <div className="spacing">
-
-        <div className="top-nav flex gap-1.5">
-          <div onClick={() => setToggle(!toggle)} className={`item p-3 rounded-md border shadow ${!toggle ? 'bg-blue-500 text-white' : ''} hover:bg-blue-600 hover:text-white active:scale-90 transition-all duration-200`}>Related Products</div>
-          <div onClick={() => setToggle(!toggle)} className={`item p-3 rounded-md border shadow ${toggle  ? 'bg-blue-500 text-white' : ''} hover:bg-blue-600 hover:text-white active:scale-90 transition-all duration-200`}>Full Description</div>
-        </div>
-
-        <div className="min-h-screen">
-          {toggle ? 
-              <div className="description my-6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam omnis in quos quis officia, placeat, debitis incidunt magnam vitae illo fugiat. Porro quibusdam quasi consequatur provident, consectetur hic a deleniti error doloremque neque, quos eligendi ipsam maxime accusantium nemo assumenda quo temporibus voluptas! Optio deserunt iste perferendis architecto voluptas sint ut aliquid natus itaque! Autem nulla deserunt repudiandae molestiae ipsam possimus consectetur rem quod? Maiores repudiandae minus ea a error hic quasi quae? Dicta iusto explicabo similique dolorum, placeat sit tempore reiciendis est mollitia, quisquam obcaecati rerum? Cumque incidunt alias veniam quasi, esse expedita ad nemo, reiciendis distinctio voluptas eligendi molestiae vero! Nesciunt sint, aspernatur velit pariatur necessitatibus odit hic labore, quos aliquid, ullam corporis alias nihil quis quae placeat laudantium autem sunt? Voluptates fugiat quos consectetur quam reiciendis at odio voluptatum aut ipsum minima delectus ut ea, fuga accusantium veniam dolorum rem cupiditate eaque architecto quod accusamus ratione. Ipsam, voluptates excepturi, libero nostrum aliquam illum voluptatibus, laudantium repudiandae magni id cum! Commodi deserunt id, at iusto eum accusamus laudantium eos labore, nemo ut, reprehenderit obcaecati! Reprehenderit fugiat veritatis omnis explicabo vitae odit quod officia reiciendis nihil at eligendi voluptatibus sequi placeat sed adipisci, repellendus voluptatum est repudiandae magnam rerum. Architecto porro qui vel, necessitatibus amet animi nobis optio eaque dignissimos molestias officia nemo dolorem minima deserunt hic, ex, tempora facilis a doloremque autem. Recusandae quibusdam aliquam illo dicta beatae minima quas! Cum quod veritatis sit possimus quidem molestiae adipisci aperiam magnam iure nostrum at explicabo sint doloribus cumque velit, illum nisi quam similique illo corrupti libero ab. Quaerat sed perspiciatis voluptatum id dignissimos aliquid doloribus dolorem fugiat corrupti nemo illum, consequatur mollitia quasi non, ratione sint hic et culpa odit blanditiis nobis impedit vel provident saepe. Dolorum repellat corrupti, consequatur minima dolorem est distinctio tempora id impedit. Eius, ea.
+      {!(isLoading || isError) && 
+        <>
+          <div className="display-box grid grid-500 max-[650px]:block gap-12 spacing">
+            <div className="left">
+              <div className="border dark:border-[#262626] rounded-md h-[500px] p-12">
+                <img src={active_image} alt="" className="object-contain h-full w-full" />
               </div>
-            :
-              <Products.Trending />
-          }
-        </div>
+              <div className="images py-6">
+                <Scroll.Side>
+                  {data?.images?.map((item, index) => 
+                    <div onClick={() => set_active_image(item?.image)} key={index} className="border dark:border-[#262626] h-[150px] w-[150px] rounded-lg p-6">
+                      <img src={item?.image} alt="" className="object-contain h-full w-full" />
+                    </div>
+                  )}
+                </Scroll.Side>
+              </div>
+            </div>
+            <div className="right ">
+              <div className="name text-3xl font-bold">{data?.name}</div>
+              <div className="flex items-start gap-0.5 mt-3 ">
+                <span className="text-sm">GHC</span>
+                <div className="price text-5xl font-thin opacity-80 my-3">{data?.price}</div>
+              </div>
+              <div className='short mb-3'>
+                <Inputs.Editor 
+                    name="short_description" 
+                    label=""
+                    value={data?.short_description}
+                    readOnly={true}
+                    theme="snow"
+                />
+              </div>
 
-      </div>
+              <div className="flex gap-3 my-6 max-[650px]:flex-col">
+                
+                <Link className='block flex-grow' to="/checkout">
+                  <Button.Md width='w-full' contentClass='flex items-center justify-center w-full gap-1'>
+                    <span className='whitespace-nowrap'>Buy Now</span>
+                    <ShoppingBasket />
+                  </Button.Md>
+                </Link>
+
+                <button onClick={(event) => toggle_item(event, data)} className={`text-center p-3 px-6 rounded-3xl border dark:border-[#262626] ${ product_ids.includes(`{${data.id}}`) ? 'bg-orange-500 text-white' : 'dark:bg-[#222] hover:bg-black' }  hover:text-white active:scale-90 transition-all duration-200 flex items-center justify-center gap-1`}>
+                  <span className='whitespace-nowrap'>Add To Cart</span>
+                  <ShoppingBag />
+                </button>
+
+              </div>
+            </div>
+          </div>
+
+          <div className="spacing">
+
+            <div className="top-nav flex gap-1.5">
+              <div onClick={() => setToggle(!toggle)} className={`item p-3 rounded-md border dark:border-[#262626] shadow ${!toggle ? 'bg-blue-500 text-white' : ''} hover:bg-blue-600 hover:text-white active:scale-90 transition-all duration-200`}>Related Products</div>
+              <div onClick={() => setToggle(!toggle)} className={`item p-3 rounded-md border dark:border-[#262626] shadow ${toggle  ? 'bg-blue-500 text-white' : ''} hover:bg-blue-600 hover:text-white active:scale-90 transition-all duration-200`}>Full Description</div>
+            </div>
+
+            <div className="min-h-screen">
+              {toggle ? 
+                  <Inputs.Editor 
+                    name="long_description" 
+                    label=""
+                    value={data?.long_description}
+                    readOnly={true}
+                    theme="snow"
+                  />
+                :
+                  <Products.Trending />
+              }
+            </div>
+
+          </div>
+        </>
+      }      
 
     </div>
   )

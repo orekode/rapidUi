@@ -8,6 +8,7 @@ export * as Inputs  from "./Inputs";
 export * as Uploads from "./Uploads";
 export * as Errors  from "./Errors";
 export * as Search  from "./Search";
+export * as Slides  from "./Slides";
 
 export { default as Footer          } from "./Footer";
 export { default as LeftRightBanner } from "./LeftRightBanner";

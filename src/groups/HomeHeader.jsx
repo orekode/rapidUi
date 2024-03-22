@@ -1,5 +1,6 @@
 
 
+import { Link } from 'react-router-dom';
 import { Button, Image } from '../components';
 
 
@@ -14,7 +15,9 @@ const HomeHeader = () => {
               </h1>
               <p className='max-w-[400px]  max-[965px]:mx-auto py-3'>Browse our collection of products, find the best fit for you, make an order and enjoy the rapid experience</p>
 
-              <Button.Md>Shop Now</Button.Md>
+              <Link to="/shop">
+                <Button.Md>Shop Page</Button.Md>
+              </Link>
 
             </div>
           </div>

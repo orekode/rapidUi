@@ -1,4 +1,4 @@
-import { Home, Laptop, Menu, Moon, Network, ShoppingBasket, Sun, Target } from 'lucide-react';
+import { Home, Laptop, Menu, Moon, Network, PictureInPicture, ShoppingBasket, Sun, Target } from 'lucide-react';
 import React, { useState } from 'react'
 import { useMode } from '../store/general';
 import { Link, Outlet } from 'react-router-dom';
@@ -24,7 +24,12 @@ const Admin = () => {
     {
       icon: <Target />,
       title: 'Brands',
-      link: '/admin'
+      link: '/admin/brands'
+    },
+    {
+      icon: <PictureInPicture />,
+      title: 'Slides',
+      link: '/admin/slides'
     },
     
   ];
@@ -38,9 +43,11 @@ const Admin = () => {
       <div className={`admin ${ menu && "active" } flex shadow dark:shadow-black`}>
         <div className={`admin-left overflow-hidden transition-all duration-200 bg-white dark:bg-[#111] shadow h-screen overflow-y-scroll scrollbar-thin scrollbar-track-transparent dark:scrollbar-track-[#111] scrollbar-thumb-blue-700`}>
 
-          <div className="font-bold text-xl p-6">
-            RapidCrew
-          </div>
+          <Link to='/'>
+            <div className="font-bold text-xl p-6">
+              RapidCrew
+            </div>
+          </Link>
 
           <div className="links">
             {nav_items.map( item => 

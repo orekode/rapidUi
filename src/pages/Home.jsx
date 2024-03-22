@@ -1,4 +1,5 @@
 
+import { Link } from 'react-router-dom';
 import { Button, Footer, LeftRightBanner, PageScroller } from '../components';
 import { Categories, HomeHeader, Nav, Products, Reviews } from '../groups';
 
@@ -23,7 +24,9 @@ const Home = () => {
             you want to see more? Visit the shop page to see all our products
           </p>
           <div className="mx-auto w-max">
-            <Button.Md>Shop Page</Button.Md>
+            <Link to="/shop">
+              <Button.Md>Shop Page</Button.Md>
+            </Link>
           </div>
           
         </div>

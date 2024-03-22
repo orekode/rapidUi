@@ -10,6 +10,7 @@ const NewProduct = () => {
 
     const [details, set_details] = useState();
     const [categories, set_categories] = useState([]);
+    const [brands, set_brands] = useState([]);
 
     const [errors, set_errors]   = useState({});
     const [images, set_images]   = useState([0]);
@@ -26,9 +27,16 @@ const NewProduct = () => {
       showLoading();
         const images_upload = images.filter( image => image instanceof File );
         let category_ids = '';
+        let brand_ids = '';
         categories.forEach( category => category_ids += ` ${category.id} `);
+        brands.forEach( brand => brand_ids += ` ${brand.id} `);
         
-        const response = await Create('products', {...details, images: images_upload, categories: category_ids});
+        const response = await Create('products', {
+            ...details, 
+            images: images_upload, 
+            categories: category_ids,
+            brands: brand_ids,
+        });
         Swal.fire({...response, icon: response?.status});
 
         if(response?.status == 'success') navigate(-1);
@@ -61,6 +69,19 @@ const NewProduct = () => {
         const check = categories.filter( item => item.id !== category.id);
 
         set_categories([...check]);
+    }
+
+    const handleBrandSelect = (brand) => {
+        const check = brands.filter( item => item.id == brand.id);
+
+        if(check.length <= 0)
+            set_brands([...brands, brand]);
+    }
+
+    const removeBrand = (brand) => {
+        const check = brands.filter( item => item.id !== brand.id);
+
+        set_brands([...check]);
     }
 
     return (
@@ -111,13 +132,14 @@ const NewProduct = () => {
                             />
                         </div>
 
-                        <Inputs.TextArea
-                            name="short_description" 
-                            label="Short Description" 
-                            callback={set_detail}
-                            value={details?.short_description}
-                            error={errors?.short_description} 
-                        />
+                        <div className="short">
+                            <Inputs.Editor 
+                                name="short_description" 
+                                label="Short Description" 
+                                callback={set_detail}
+                                error={errors?.short_description} 
+                            />
+                        </div>
 
                         <Inputs.Select
                             name="categories"
@@ -131,7 +153,7 @@ const NewProduct = () => {
                         <div className="selected-categories flex items-center gap-1.5">
                             {categories?.map(item => 
                                 <div 
-                                    onClick={removeCategory} 
+                                    onClick={() => removeCategory(item)} 
                                     className="bg-neutral-200 dark:bg-[#222] hover:bg-red-500 hover:text-white active:scale-90 transition-all duration-200 px-3 py-1.5 rounded-2xl shadow"
                                 >
                                     {item.name}
@@ -140,15 +162,21 @@ const NewProduct = () => {
                         </div>
 
                         <Inputs.Select
-                            name="parent"
+                            name="brands"
                             label="Brand"
-                            target="categories"
-                            callback={(item) => set_detail("parent", item.id)}
-                            initValue={["id", details?.parent]}
-                            error={errors?.parent}
+                            target="brands"
+                            callback={handleBrandSelect}
+                            initValue={["id", details?.brands]}
+                            error={errors?.brands}
                         />
 
-                        
+                        <div className="selected-categories flex items-center gap-1.5">
+                            {brands?.map(item => 
+                                <div 
+                                    onClick={() => removeBrand(item)} 
+                                    className="bg-neutral-200 dark:bg-[#222] hover:bg-red-500 hover:text-white active:scale-90 transition-all duration-200 px-3 py-1.5 rounded-2xl shadow">{item.name}</div>
+                            )}
+                        </div>
 
                         <Inputs.Editor 
                             name="long_description" 

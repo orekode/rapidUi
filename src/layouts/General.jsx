@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import { Nav } from '../groups'
 import { Footer, PageScroller } from '../components'
 import Cart from '../groups/Cart'
+import { ShoppingBasket } from 'lucide-react'
 
 const General = () => {
   return (
@@ -19,6 +20,12 @@ const General = () => {
       <Cart />
 
       <PageScroller />
+
+      <div id="cart-icon-animate" className="fixed top-1/2 left-1/2 z-[-10]" style={{opacity: 0}}>
+        <div className="h-[30px] w-[30px] rounded-full border bg-orange-500 shadow flex items-center justify-center">
+          <ShoppingBasket size={20}/>
+        </div>
+      </div>
 
     </div>
   )

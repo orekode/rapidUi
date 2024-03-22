@@ -11,11 +11,6 @@ export const useMode = create( persist( (set) => ({
     })
 );
 
-export const useCart = create((set) => ({
-    cart: false,
-    toggle: () => set((state) => ({...state, cart: !state.cart }))
-}));
-
 export const useLoading = create((set) => ({
     show: false,
     toggle:      () => set((state) => ({...state, show: !state.show })),
@@ -24,5 +19,4 @@ export const useLoading = create((set) => ({
 }));
 
 withStorageDOMEvents(useMode);
-withStorageDOMEvents(useCart);
 withStorageDOMEvents(useLoading);

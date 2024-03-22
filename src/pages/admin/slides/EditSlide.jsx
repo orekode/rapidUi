@@ -9,11 +9,11 @@ import Swal from 'sweetalert2';
 import { useItem } from '../../../apiCalls/read';
 import { Trash } from 'lucide-react';
 
-const EditCategory = () => {
+const EditSlide = () => {
 
     const { id } = useParams();
 
-    const { data } = useItem({target: `categories/${id}`});
+    const { data } = useItem({target: `slides/${id}`});
 
     
     const [details, set_details] = useState({});
@@ -32,7 +32,7 @@ const EditCategory = () => {
 
     const handleSubmit = async () => {
       showLoading();
-        const response = await Create(`categories/${id}`, {...details, "_method" : "PATCH"}, "Update Successfull");
+        const response = await Create(`slides/${id}`, {...details, "_method" : "PATCH"}, "Update Successfull");
         Swal.fire({...response, icon: response?.status});
         if(response?.status == 'success') navigate(-1);
         set_errors(response?.errors)
@@ -54,7 +54,7 @@ const EditCategory = () => {
 
       if (result.isConfirmed) {
 
-          const response = await Create(`categories/${id}`, {_method: "delete"}, "Category Deleted Successfully");
+          const response = await Create(`slides/${id}`, {_method: "delete"}, "Slide Deleted Successfully");
 
           Swal.fire({...response, icon: response?.status});
 
@@ -82,12 +82,12 @@ const EditCategory = () => {
             <Link to={-1}>
               <Button.Sm baseColor='bg-black'>Back</Button.Sm>
             </Link>
-            <div className="font-bold text-3xl">Edit Category</div>
+            <div className="font-bold text-3xl">Edit Slide</div>
           </div>
 
           <div className="max-w-[500px] mx-auto">
             
-            <div className="mx-auto h-[300px] w-[300px]">
+            <div className="mx-auto h-[300px] w-[300px] mb-6">
               <Uploads.Image 
                 initUrl={details?.url} 
                 uploadCallback={(image) => set_detail("image", image)} 
@@ -96,24 +96,7 @@ const EditCategory = () => {
               />
             </div>
 
-            
-            <Inputs.Select
-              name="parent"
-              label="Parent Category"
-              target="categories"
-              callback={(item) => set_detail("parent", item.id)}
-              initValue={["id", details?.parent]}
-              error={errors.parent}
-            />
-              
-
-            <Inputs.Text 
-              name="name" 
-              label="Category Name" 
-              callback={set_detail}
-              value={details.name}
-              error={errors.name} 
-            />
+          
 
             <div className="flex items-center gap-1">
               <Button.Md 
@@ -121,7 +104,7 @@ const EditCategory = () => {
                 contentClass='w-full' 
                 onClick={handleSubmit}
               >
-                Edit Category
+                Edit Slide
               </Button.Md>
 
               <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white shadow h-[40px] w-[40px] rounded-3xl flex items-center justify-center">
@@ -136,4 +119,4 @@ const EditCategory = () => {
     )
 }
 
-export default EditCategory
+export default EditSlide

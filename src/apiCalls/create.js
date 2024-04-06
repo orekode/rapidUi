@@ -2,21 +2,25 @@ import axios from "./";
 
 
 
-export const Create = async (target, values, title="Create Successfull") => {
+export const Create = async (target, values, title="Create Successfull", isAuth=false) => {
 
+        console.log(`Bearer ${sessionStorage.getItem('xsrf')}`, isAuth);
     try {
         const result = await axios.post(target, values, {
             headers: {
                 "Content-Type": "multipart/form-data",
-                "Accept": "application/json"
+                "Accept": "application/json",
+                Authorization: isAuth ? `Bearer ${sessionStorage.getItem('xsrf')}` : '',
             }
         });
+
 
         console.log(result);
 
         if(result.status == "200" || result.status == "201") return {
             status: "success",
-            title
+            title,
+            result
         }
     }
     catch(error) {

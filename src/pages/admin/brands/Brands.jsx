@@ -11,7 +11,8 @@ const Brands = () => {
 
   const { data, isLoading, isError } = useItems({
     target: 'brands',
-    params: { page, filters }
+    params: { page, filters },
+    isAuth: true
   });
 
   return (

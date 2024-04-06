@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { Button, Card, Inputs } from '../components'
 import { useCart } from '../store/cart'
-import { useLoading } from '../store/general';
+import { useAuth, useLoading } from '../store/general';
 import Swal from 'sweetalert2';
 import { Create } from '../apiCalls/create';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,16 @@ import { useNavigate } from 'react-router-dom';
 const Checkout = () => {
   const { items, total_price, init_cart } = useCart();
 
-  const [details, set_details] = useState();
+  const { auth } = useAuth();
+
+  const { name, email, phone_number } = auth;
+
+  const [details, set_details] = useState({
+    name,
+    email,
+    phone_number
+  });
+  console.log(details);
   const [errors, set_errors]   = useState({});
 
   const { showLoading, hideLoading } = useLoading();

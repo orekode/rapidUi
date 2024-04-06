@@ -24,7 +24,7 @@ const NewBrand = () => {
 
     const handleSubmit = async () => {
       showLoading();
-        const response = await Create('brands', details);
+        const response = await Create('brands', details, "Create Successfull", true);
         Swal.fire({...response, icon: response?.status});
 
         if(response?.status == 'success') navigate(-1);

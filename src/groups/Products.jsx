@@ -5,15 +5,15 @@ import { useState, useEffect } from 'react'
 import { Card, Errors, Pagination } from '../components'
 import { useItems } from '../apiCalls/read';
 
-export const Trending = () => {
+export const Trending = ({ filters, sort }) => {
+    const [ page, set_page ] = useState(1);
     const [ products, setProducts ] = useState([]);
 
     const { data, isLoading, isError } = useItems({
-        target: 'products',
-        // params: { page, filters }
+        target: 'data/products',
+        params: { page, filters, sort }
     });
 
-                            
     return (
         <>
             <div className="product-grid grid-box my-12">
@@ -31,22 +31,21 @@ export const Trending = () => {
 
             {isError && <Errors.Network />}
 
+            <Pagination meta={data?.meta} setPage={set_page} />
+
         </>
     )
 }
 
-export const Shop = () => {
+export const Shop = ({ filters, sort }) => {
     const [ page, set_page ] = useState(1);
-    const [ filters, set_filters ] = useState({});
-
     const [ products, setProducts ] = useState([]);
 
     const { data, isLoading, isError } = useItems({
-        target: 'products',
-        params: { page, filters }
+        target: 'data/products',
+        params: { page, filters, sort }
     });
 
-                            
     return (
         <>
             <div className="product-grid grid-box my-12">

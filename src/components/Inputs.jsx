@@ -1,7 +1,7 @@
 
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Eye, EyeOff } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react'
 import { useItems } from '../apiCalls/read';
 import ReactQuill from 'react-quill';
@@ -12,7 +12,7 @@ export const Select = ({ label, target, callback=()=>{}, initValue=null , error}
     const [show, set_show] = useState(false);
     const [item, set_item] = useState(false);
 
-    const { data } = useItems({target});
+    const { data } = useItems({target, isAuth: true});
 
     const handleSelect = (item) => {
         set_item(item);
@@ -79,6 +79,33 @@ export const Select = ({ label, target, callback=()=>{}, initValue=null , error}
     )
 };
 
+export const Password = ({ name, label, callback, value, error, ...props }) => {
+
+    const [visible, set_visible] = useState(false);
+
+    return (
+        <div className="input flex flex-col gap-1 my-3">
+            <label htmlFor={name} className='text-gray-400'>{label}</label>
+            <div className="relative flex">
+                <input onChange={(event) => callback(name, event.target.value )} value={value} type={visible ? "text" : "password"} name={name} className="border dark:bg-[#111] border-neutral-300 dark:border-[#444] px-3 py-1.5 text-lg rounded-3xl flex-grow" {...props}/>
+                <div className="absolute top-1/2 right-0 -translate-y-1/2">
+                    <div onClick={() => set_visible(!visible)} className="h-[40px] w-[40px] flex items-center justify-center">
+                        {visible ? 
+                            <Eye size={18}/>
+                        :
+                            <EyeOff size={18}/>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div className="error text-red-600 text-xs">
+                {error}
+            </div>
+
+        </div>
+    );
+};
+
 export const Text = ({ name, label, callback, value, error, ...props }) => {
 
     return (
@@ -133,3 +160,4 @@ export const Editor = ({ name, label, callback, value, error, ...props }) => {
         </div>
     );
 };
+

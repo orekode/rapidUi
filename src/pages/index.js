@@ -3,6 +3,7 @@
 
 export { default as Home }             from "./Home";
 export { default as Shop }             from "./Shop";
+export { default as ShopCategory }     from "./ShopCategory";
 export { default as Exchange }         from "./Exchange";
 export { default as Product }          from "./Product";
 export { default as ProductExchange }  from "./ProductExchange";
@@ -23,3 +24,5 @@ export { default as EditBrand       }      from "./admin/brands/EditBrand";
 export { default as Slides          }      from "./admin/slides/Slides";
 export { default as NewSlide        }      from "./admin/slides/NewSlide";
 export { default as EditSlide       }      from "./admin/slides/EditSlide";
+export { default as Orders          }      from "./admin/orders/Orders";
+export { default as Order           }      from "./admin/orders/Order";

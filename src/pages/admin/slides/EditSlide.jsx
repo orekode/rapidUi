@@ -13,7 +13,7 @@ const EditSlide = () => {
 
     const { id } = useParams();
 
-    const { data } = useItem({target: `slides/${id}`});
+    const { data } = useItem({target: `slides/${id}`, isAuth: true});
 
     
     const [details, set_details] = useState({});
@@ -32,7 +32,7 @@ const EditSlide = () => {
 
     const handleSubmit = async () => {
       showLoading();
-        const response = await Create(`slides/${id}`, {...details, "_method" : "PATCH"}, "Update Successfull");
+        const response = await Create(`slides/${id}`, {...details, "_method" : "PATCH"}, "Update Successfull", true);
         Swal.fire({...response, icon: response?.status});
         if(response?.status == 'success') navigate(-1);
         set_errors(response?.errors)
@@ -54,7 +54,7 @@ const EditSlide = () => {
 
       if (result.isConfirmed) {
 
-          const response = await Create(`slides/${id}`, {_method: "delete"}, "Slide Deleted Successfully");
+          const response = await Create(`slides/${id}`, {_method: "delete"}, "Slide Deleted Successfully", true);
 
           Swal.fire({...response, icon: response?.status});
 

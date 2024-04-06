@@ -24,7 +24,7 @@ const NewCategory = () => {
 
     const handleSubmit = async () => {
       showLoading();
-        const response = await Create('categories', details);
+        const response = await Create('categories', details, "Create Successfull", true);
         Swal.fire({...response, icon: response?.status});
 
         if(response?.status == 'success') navigate(-1);

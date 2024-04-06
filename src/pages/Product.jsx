@@ -19,11 +19,11 @@ const Product = () => {
 
   const { showLoading, hideLoading } = useLoading();
 
-  const { data, isLoading, isError } = useItem({target: `products/${decrypt(id)}`});
+  const { data, isLoading, isError } = useItem({target: `data/products/${decrypt(id)}`});
 
   const [toggle, setToggle] = useState(false);
 
-  const { toggle_item, product_ids } = useCart();
+  const { toggle_item, product_ids, add_item } = useCart();
 
   useEffect(() => {
     set_active_image(data?.image);
@@ -108,12 +108,12 @@ const Product = () => {
 
               <div className="flex gap-3 my-6 max-[650px]:flex-col">
                 
-                <Link className='block flex-grow' to="/checkout">
-                  <Button.Md width='w-full' contentClass='flex items-center justify-center w-full gap-1'>
+                <div className='block flex-grow'>
+                  <Button.Md onClick={() => {add_item(data); navigate('/checkout')}} width='w-full' contentClass='flex items-center justify-center w-full gap-1'>
                     <span className='whitespace-nowrap'>Buy Now</span>
                     <ShoppingBasket />
                   </Button.Md>
-                </Link>
+                </div>
 
                 <button onClick={(event) => toggle_item(event, data)} className={`text-center p-3 px-6 rounded-3xl border dark:border-[#262626] ${ product_ids.includes(`{${data.id}}`) ? 'bg-orange-500 text-white' : 'dark:bg-[#222] hover:bg-black' }  hover:text-white active:scale-90 transition-all duration-200 flex items-center justify-center gap-1`}>
                   <span className='whitespace-nowrap'>Add To Cart</span>

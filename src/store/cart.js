@@ -84,6 +84,25 @@ export const useCart = create( persist( (set) => ({
             return {...state, items, product_ids, total_quantity: items.length, total_price};
         }),
 
+        add_item: (item) => set((state) => {
+            let items = [...state.items];
+            let product_ids = state.product_ids;
+            let product_id = `{${item.id}}`;
+            let total_price = state.total_price;
+
+            if(!product_ids.includes(product_id)) {
+                items.push({...item, quantity: 1});
+
+                product_ids += product_id;
+                total_price += parseFloat(item.price);
+
+                animate_cart_icon(event);
+
+            }
+
+            return {...state, items, product_ids, total_quantity: items.length, total_price};
+        }),
+
         increase: (item) => set((state) => {
 
             let items = [...state.items];

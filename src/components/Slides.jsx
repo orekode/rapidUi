@@ -12,7 +12,7 @@ export const Sm = () => {
     const page = 1;
     const filters = {};
     const { data, isLoading, isError } = useItems({
-        target: 'slides',
+        target: 'data/slides',
         params: { page, filters }
     });
     

@@ -12,7 +12,10 @@ const EditBrand = () => {
 
     const { id } = useParams();
 
-    const { data } = useItem({target: `brands/${id}`});
+    const { data } = useItem({
+      target: `brands/${id}`,
+      isAuth: true
+    });
 
     
     const [details, set_details] = useState({});
@@ -31,7 +34,7 @@ const EditBrand = () => {
 
     const handleSubmit = async () => {
       showLoading();
-        const response = await Create(`brands/${id}`, {...details, "_method" : "PATCH"}, "Update Successfull");
+        const response = await Create(`brands/${id}`, {...details, "_method" : "PATCH"}, "Update Successfull", true);
         Swal.fire({...response, icon: response?.status});
         if(response?.status == 'success') navigate(-1);
         set_errors(response?.errors)

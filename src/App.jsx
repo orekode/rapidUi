@@ -8,9 +8,9 @@ import {
   Exchange, Home, 
   Shop, Product, 
   ProductExchange, 
-  Checkout, Login, 
+  Checkout, Categories, Login, 
   SignUp, Products, 
-  NewProduct, Categories, 
+  NewProduct, ShopCategory, 
   NewCategory, EditCategory,
   EditProduct,
   NewBrand,
@@ -18,11 +18,17 @@ import {
   Brands,
   NewSlide,
   EditSlide,
-  Slides
+  Slides,
+  Orders,
+  Order
 } from './pages';
 
+import * as Customers from "./pages/customer";
+import * as LapExchange from "./pages/exchange";
+
 import Admin from './layouts/Admin';
-import NewCategories from './pages/admin/categories/NewCategory';
+import Customer from './layouts/Customer';
+import { isAdmin, isCustomer } from './utils/auth';
 
 function App() {
 
@@ -34,31 +40,45 @@ function App() {
 
           <Route index                      element={<Home            />}  />
           <Route path="shop"                element={<Shop            />}  />
+          <Route path="shop/category/:id"   element={<ShopCategory    />}  />
           <Route path="exchange"            element={<Exchange        />}  />
-          <Route path="product/:id"             element={<Product         />}  />
-          <Route path="exchange/product"    element={<ProductExchange />}  />
+          <Route path="product/:id"         element={<Product         />}  />
+          <Route path="exchange/product/:id"element={<ProductExchange />}  />
           <Route path="checkout"            element={<Checkout        />}  />
           <Route path="login"               element={<Login           />}  />
           <Route path="signup"              element={<SignUp          />}  />
 
         </Route>
 
-        <Route path="admin"        element={<Admin /> }>
+        <Route loader={isAdmin} path="admin"        element={<Admin /> }>
           <Route index             element={<Products   />} />
           <Route path="products"   element={<Products   />} />
           <Route path="categories" element={<Categories  />} />
           <Route path="brands"     element={<Brands  />} />
           <Route path="slides"     element={<Slides  />} />
+          <Route path="orders"     element={<Orders  />} />
         </Route>
 
-        <Route path="admin/product/new"             element={<NewProduct  />}  />
-        <Route path="admin/category/new"            element={<NewCategory />}  />
-        <Route path="admin/brand/new"               element={<NewBrand />}  />
-        <Route path="admin/slide/new"               element={<NewSlide />}  />
-        <Route path="admin/category/edit/:id"       element={<EditCategory />} />
-        <Route path="admin/product/edit/:id"        element={<EditProduct />} />
-        <Route path="admin/brand/edit/:id"          element={<EditBrand />} />
-        <Route path="admin/slide/edit/:id"          element={<EditSlide />} />
+        <Route loader={isCustomer} path="customer"     element={<Customer />} >
+          <Route index                       element={<Customers.Orders />} />
+          <Route path="products"             element={<Customers.Products />} />
+        </Route>
+
+        <Route loader={isAdmin} path="admin">
+          <Route path="product/new"             element={<NewProduct  />}  />
+          <Route path="category/new"            element={<NewCategory />}  />
+          <Route path="brand/new"               element={<NewBrand />}  />
+          <Route path="slide/new"               element={<NewSlide />}  />
+          <Route path="category/edit/:id"       element={<EditCategory />} />
+          <Route path="product/edit/:id"        element={<EditProduct />} />
+          <Route path="brand/edit/:id"          element={<EditBrand />} />
+          <Route path="slide/edit/:id"          element={<EditSlide />} />
+          <Route path="order/:id"               element={<Order />} />
+        </Route>
+
+        <Route loader={isCustomer} path="customer/order/:id"        element={<Customers.Order />} />
+        <Route loader={isCustomer} path="exchange/new"              element={<LapExchange.NewProduct />} />
+        <Route loader={isCustomer} path="exchange/edit/:id"         element={<LapExchange.EditProduct />} />
 
       </Route>
     )

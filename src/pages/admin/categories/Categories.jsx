@@ -11,7 +11,8 @@ const Categories = () => {
 
   const { data, isLoading, isError } = useItems({
     target: 'categories',
-    params: { page, filters }
+    params: { page, filters },
+    isAuth: true
   });
 
 

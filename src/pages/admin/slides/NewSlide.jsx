@@ -24,7 +24,7 @@ const NewSlide = () => {
 
     const handleSubmit = async () => {
       showLoading();
-        const response = await Create('slides', details);
+        const response = await Create('slides', details, "Create Successfull", true);
         Swal.fire({...response, icon: response?.status});
 
         if(response?.status == 'success') navigate(-1);

@@ -127,7 +127,7 @@ export const CartItem = ({ item }) => {
 export const Mason = ({ item }) => {
 
   return (
-    <Link to={'/exchange/product'}>
+    <Link to={`/exchange/product/${encrypt(item.id)}` }>
       <div className="product-item  mb-3 hover:scale-105 active:scale-95 transition-all duration-200">
         <div className="image p-12 border dark:border-[#333] shadow rounded-3xl">
           <img src={item.image} alt="" className="w-full" />
@@ -138,11 +138,11 @@ export const Mason = ({ item }) => {
             <span>Ghc</span>
             <span>{item.price}</span>
           </div>
-          <div className="name">{item.title}</div>
+          <div className="name">{item.name}</div>
           <p className="description text-xs text-gray-500 mt-1">
-            Lorem ipsum dolor sit amet consecterum voluptatibus deserunt vero voluptate atquei...
+            {item.short_description.slice(0, 100)}...
           </p>
-          <div className="usage p-0.5 px-1 mt-1.5 rounded bg-gray-100 dark:bg-[#444] shadow w-max text-xs ">Brand New</div>
+          <div className="usage p-0.5 px-1 mt-1.5 rounded bg-gray-100 dark:bg-[#444] shadow w-max text-xs ">{item.status}</div>
         </div>
       </div>
     </Link>

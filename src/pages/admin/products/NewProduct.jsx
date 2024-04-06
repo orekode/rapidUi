@@ -1,12 +1,14 @@
 import React, { useRef, useState } from 'react'
 import { Button, Inputs, Uploads } from '../../../components'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Create } from '../../../apiCalls/create';
 import Swal from 'sweetalert2';
 import { useLoading } from '../../../store/general';
 
 
 const NewProduct = () => {
+
+    const navigate = useNavigate();
 
     const [details, set_details] = useState();
     const [categories, set_categories] = useState([]);
@@ -36,7 +38,7 @@ const NewProduct = () => {
             images: images_upload, 
             categories: category_ids,
             brands: brand_ids,
-        });
+        }, "Create Successfull", true);
         Swal.fire({...response, icon: response?.status});
 
         if(response?.status == 'success') navigate(-1);

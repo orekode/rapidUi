@@ -13,10 +13,9 @@ const Slides = () => {
 
   const { data, isLoading, isError } = useItems({
     target: 'slides',
-    params: { page, filters }
+    params: { page, filters },
+    isAuth: true,
   });
-
-
 
   return (
     <div>

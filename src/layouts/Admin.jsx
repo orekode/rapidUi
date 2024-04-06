@@ -1,6 +1,6 @@
-import { Home, Laptop, Menu, Moon, Network, PictureInPicture, ShoppingBasket, Sun, Target } from 'lucide-react';
+import { Home, Laptop, LogOut, Menu, Moon, Network, PictureInPicture, ShoppingBasket, Sun, Target } from 'lucide-react';
 import React, { useState } from 'react'
-import { useMode } from '../store/general';
+import { useAuth, useMode } from '../store/general';
 import { Link, Outlet } from 'react-router-dom';
 
 const Admin = () => {
@@ -19,7 +19,7 @@ const Admin = () => {
     {
       icon: <ShoppingBasket />,
       title: 'Orders',
-      link: '/admin/'
+      link: '/admin/orders'
     },
     {
       icon: <Target />,
@@ -37,6 +37,8 @@ const Admin = () => {
   const { mode, toggle } = useMode(state => state);
 
   const [menu, set_menu] = useState(false);
+
+  const { logout } = useAuth();
 
   return (
     <div className='bg-gray-200 dark:bg-[#0e0e0e] dark:text-white bg-opacity-70'>
@@ -59,22 +61,31 @@ const Admin = () => {
               </Link>
             )}
 
-              <div onClick={toggle} className="link-item flex items-center border-y dark:border-neutral-700 px-2 py-4 hover:bg-blue-500 hover:text-white transition-all duration-200">
-                <div className="px-3">
-                  {mode == 'light' ?
-                    <Moon />
-                    :
-                    <Sun />
-                  }
-                </div>
-                <span className='px-3 whitespace-nowrap'>
-                  {mode == 'light' ? 
-                    "Dark Mode"
-                    :
-                    "Light Mode"
-                  }
-                </span>
+            <div onClick={logout} className="link-item flex items-center border-y dark:border-neutral-700 px-2 py-4 hover:bg-blue-500 hover:text-white transition-all duration-200">
+              <div className="px-3">
+                <LogOut />
               </div>
+              <span className='px-3 whitespace-nowrap'>
+                Log Out
+              </span>
+            </div>
+
+            <div onClick={toggle} className="link-item flex items-center border-y dark:border-neutral-700 px-2 py-4 hover:bg-blue-500 hover:text-white transition-all duration-200">
+              <div className="px-3">
+                {mode == 'light' ?
+                  <Moon />
+                  :
+                  <Sun />
+                }
+              </div>
+              <span className='px-3 whitespace-nowrap'>
+                {mode == 'light' ? 
+                  "Dark Mode"
+                  :
+                  "Light Mode"
+                }
+              </span>
+            </div>
           </div>
 
         </div>

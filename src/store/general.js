@@ -18,5 +18,26 @@ export const useLoading = create((set) => ({
     hideLoading: () => set((state) => ({...state, show: false  })), 
 }));
 
+export const useAuth = create((set) => ({
+    auth: {
+        loggedIn: false,
+        basePath: '',
+        role: 'guest',
+        name: '',
+        email: '',
+        phone_number: '',
+    },
+    login: (basePath, role='customer', name, email, phone_number) => set((state) => ({...state, auth: {...state.auth, loggedIn: true, basePath, role, name, email, phone_number}  })),
+    logout: () => set((state) => {
+
+        setTimeout(() => {
+            sessionStorage.removeItem('xsrf');
+            location.reload();
+        }, 2000)
+
+        return {...state, auth: {loggedIn: false, basePath: '', role: 'guest'}  }
+    }),
+}));
+
 withStorageDOMEvents(useMode);
 withStorageDOMEvents(useLoading);

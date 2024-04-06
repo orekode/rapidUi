@@ -23,7 +23,6 @@ export const Simple = ({ callback }) =>
 
     useEffect(() => {
         callback(search);
-        console.log("Searching: ", search);
     }, [search]);
 
     return (

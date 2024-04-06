@@ -10,7 +10,8 @@ const Products = () => {
 
   const { data, isLoading, isError } = useItems({
     target: 'products',
-    params: { page, filters }
+    params: { page, filters },
+    isAuth: true
   });
 
 

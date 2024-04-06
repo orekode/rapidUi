@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Menu, Moon, ShoppingBag, Sun, X } from "lucide-react";
 import { Button } from '../components';
-import { useMode } from '../store/general';
+import { useAuth, useMode } from '../store/general';
 import { useCart } from "../store/cart";
 import { useState } from 'react';
 
@@ -28,13 +28,17 @@ const Nav = () => {
 
     const [showMenu, setShowMenu] = useState(false);
 
+    const { auth } = useAuth();
+
 
     return (
         <>
             <nav className='fixed top-0 left-0 w-full z-50 scale-90'>
                 <div className="flex-between px-24 max-[900px]:px-6 h-[70px] bg-gray-100 dark:bg-neutral-950 rounded-full">
                     <div className="logo">
-                        <div className="h-[50px] w-[50px] rounded-full dark:bg-white bg-black"></div>
+                        <div className="h-[50px] w-[50px] rounded-full dark:bg-white">
+                            <img src="/images/logo.png" alt="" className="obj-cover h-full w-full" />
+                        </div>
                     </div>
 
                     <div className="flex items-center gap-3 max-[700px]:hidden">
@@ -48,12 +52,20 @@ const Nav = () => {
                         </div>
 
                         <div className="flex gap-3">
-                            <Link to={'/login'}>
-                                <Button.Sm>Log In</Button.Sm>
-                            </Link>
-                            <Link to={'/signup'}>
-                                <Button.Sm baseColor='bg-red-500' hoverColor='bg-blue-500'>Sign Up</Button.Sm>
-                            </Link>
+                            {auth.loggedIn ? 
+                                <Link to={auth.basePath}>
+                                    <Button.Sm>Dashboard</Button.Sm>
+                                </Link>
+                            :
+                                <>
+                                    <Link to={'/login'}>
+                                        <Button.Sm>Log In</Button.Sm>
+                                    </Link>
+                                    <Link to={'/signup'}>
+                                        <Button.Sm baseColor='bg-red-500' hoverColor='bg-blue-500'>Sign Up</Button.Sm>
+                                    </Link>
+                                </>
+                            }
 
                             <div onClick={toggle} className="h-[35px] w-[35px] rounded-full bg-gray-200 dark:bg-black border border-gray-500  flex-center scale-75">
                                 {mode == 'light' ?

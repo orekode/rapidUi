@@ -16,7 +16,7 @@ const EditProduct = () => {
 
     const { showLoading, hideLoading } = useLoading();
 
-    const { data, isLoading, isError } = useItem({target: `products/${id}`});
+    const { data, isLoading, isError } = useItem({target: `products/${id}`, isAuth: true});
 
     const [details, set_details] = useState();
     const [categories, set_categories] = useState([]);
@@ -48,7 +48,7 @@ const EditProduct = () => {
             categories: category_ids,
             brands: brand_ids,
             "_method": "PATCH"
-          });
+          }, "Create Successfull", true);
 
           Swal.fire({...response, icon: response?.status});
   
@@ -73,7 +73,7 @@ const EditProduct = () => {
 
         if (result.isConfirmed) {
 
-            const response = await Create(`products/${id}`, {_method: "delete"}, "Product Deleted Successfully");
+            const response = await Create(`products/${id}`, {_method: "delete"}, "Product Deleted Successfully", true);
 
             Swal.fire({...response, icon: response?.status});
   

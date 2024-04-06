@@ -32,7 +32,7 @@ const EditCategory = () => {
 
     const handleSubmit = async () => {
       showLoading();
-        const response = await Create(`categories/${id}`, {...details, "_method" : "PATCH"}, "Update Successfull");
+        const response = await Create(`categories/${id}`, {...details, "_method" : "PATCH"}, "Update Successfull", true);
         Swal.fire({...response, icon: response?.status});
         if(response?.status == 'success') navigate(-1);
         set_errors(response?.errors)
@@ -54,7 +54,7 @@ const EditCategory = () => {
 
       if (result.isConfirmed) {
 
-          const response = await Create(`categories/${id}`, {_method: "delete"}, "Category Deleted Successfully");
+          const response = await Create(`categories/${id}`, {_method: "delete"}, "Category Deleted Successfully", true);
 
           Swal.fire({...response, icon: response?.status});
 
